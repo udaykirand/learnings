@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
+import com.taxcalc.model.IInputFormBean;
+import com.taxcalc.model.TaxInputForm;
+
 
 /**
  * Following class in base class its contain few abstract methods
@@ -26,7 +29,7 @@ import java.util.List;
  *
  * Input 1: 1 book at 12.49 1 music CD at 14.99 1 chocolate bar at 0.85
  *
- * Input 2: 1 im@author Vaquar Khanported box of chocolates at 10.00 1 imported bottle of perfume
+ * Input 2: 1 im@author Udayported box of chocolates at 10.00 1 imported bottle of perfume
  * at 47.50
  *
  * Input 3: 1 imported bottle of perfume at 27.99 1 bottle of perfume at 18.99 1
@@ -45,10 +48,10 @@ import java.util.List;
  * Taxes: 6.70 Total: 74.68
  * =============================================================================
  *
- * @author Vaquar Khan
+ * @author Uday
  */
 public abstract class SalesTaxCalculatorBaseImpl implements
-		SalesTaxCalculatorIfc {  //ROUND_FACTOR
+		ISalesTaxCalculator {  //ROUND_FACTOR
     private static final BigDecimal ROUND_FACTOR = new BigDecimal("0.05");
 
     /**
@@ -56,13 +59,11 @@ public abstract class SalesTaxCalculatorBaseImpl implements
      * (Once bill gets generate user can’t add, edit, remove or calculate records)
      * @throws ShopingCartException
      */
-    public void calculateTax(List<?> shopingCartInputDTOList) throws ShopingCartException {
+    public void calculateTax(List<IInputFormBean> cart) throws ShopingCartException {
 
         // Calculate records
-        List<?> newShopingCartInputDTOList = this.calculateTaxPercentage(shopingCartInputDTOList);
-        System.out.println(" \t \t \t :SHOPPING BILL: ");
-        System.out.println("\n \n ");
-        this.displayBill(newShopingCartInputDTOList);
+        List<IInputFormBean> processedCart = this.calculateTaxPercentage(cart);
+        this.displayBill(processedCart);
 
     }
 
@@ -71,9 +72,9 @@ public abstract class SalesTaxCalculatorBaseImpl implements
      * May be in future requirement gets change and want to display result in different format thats why
      * I have made it abstract
      *
-     * @param shopingCartInputDTOList
+     * @param processedCart
      */
-    public abstract void displayBill(List<?> shopingCartInputDTOList);
+    public abstract void displayBill(List<IInputFormBean> processedCart);
 
     /**
      * Following method is used to calculate tax
@@ -94,8 +95,8 @@ public abstract class SalesTaxCalculatorBaseImpl implements
      * @return
      * @throws ShopingCartException
      */
-    public abstract List<InputDataDTO> calculateTaxPercentage(
-                    List<?> shopingCartInputDTOList) throws ShopingCartException;
+    public abstract List<IInputFormBean> calculateTaxPercentage(
+                    List<IInputFormBean> shopingCartInputDTOList) throws ShopingCartException;
 
     /**
      * Following method is used for add tax with price
@@ -126,7 +127,7 @@ public abstract class SalesTaxCalculatorBaseImpl implements
                                             .iterator();
 
                     while (shopingCartInputDTOListItr.hasNext()) {
-                                InputDataDTO inputDataDTO = (InputDataDTO) shopingCartInputDTOListItr
+                                TaxInputForm inputDataDTO = (TaxInputForm) shopingCartInputDTOListItr
                                                         .next();
                                 total = total.add(inputDataDTO.getGoodsPrice().add(inputDataDTO.getCalculateTaxPercentage()));
 
@@ -152,7 +153,7 @@ public abstract class SalesTaxCalculatorBaseImpl implements
                     Iterator<?> shopingCartInputDTOListItr = shopingCartInputDTOList.iterator();
 
                     while (shopingCartInputDTOListItr.hasNext()) {
-                                InputDataDTO inputDataDTO = (InputDataDTO) shopingCartInputDTOListItr.next();
+                                TaxInputForm inputDataDTO = (TaxInputForm) shopingCartInputDTOListItr.next();
                                 total = total.add(inputDataDTO.getCalculateTaxPercentage());
                     }// end of while
 

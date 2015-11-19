@@ -1,14 +1,14 @@
-package com.taxcalc.service;
+package com.taxcalc.model;
 
 import java.math.BigDecimal;
 
 /**
  * Following Interface is using as a contract for DTO
  * 
- * @author Vaquar Khan
+ * @author Uday
  * 
  */
-public interface InputDataDTOIfc {
+public interface IInputFormBean {
 
 	/**
 	 * Following method will use for isAdditionalImportedTaxPercentage

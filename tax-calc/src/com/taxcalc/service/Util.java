@@ -6,10 +6,13 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Properties;
 
+import com.taxcalc.model.IInputFormBean;
+import com.taxcalc.model.TaxInputForm;
+
 /**
  * Following class contains utility methods
  * 
- * @author Vaquar Khan
+ * @author Uday
  * 
  */
 public class Util {
@@ -27,7 +30,7 @@ public class Util {
 		FileInputStream fis = null;
 		String propertiesKey = null;
 		try {
-			fis = new FileInputStream(ShoppingCartconstantsIfc.PROPERTIES_URL);
+			fis = new FileInputStream(Constants.PROPERTIES_URL);
 			prop.load(fis);
 			// get value from key
 			propertiesKey = prop.getProperty(keyValue);
@@ -53,10 +56,10 @@ public class Util {
 	 * @param salesTax
 	 * @return
 	 */
-	public static List<InputDataDTO> convertDto(InputDataDTO inputDataDTO,
-			BigDecimal salesTax, List<InputDataDTO> newShopingCartInputDTOList) {
+	public static List<IInputFormBean> convertDto(IInputFormBean inputDataDTO,
+			BigDecimal salesTax, List<IInputFormBean> processedCart) {
 
-		InputDataDTO newInputDataDTO = new InputDataDTO();
+		TaxInputForm newInputDataDTO = new TaxInputForm();
 
 		newInputDataDTO.setAdditionalImportedTaxPercentage(inputDataDTO
 				.isAdditionalImportedTaxPercentage());
@@ -68,8 +71,8 @@ public class Util {
 		newInputDataDTO.setGoodsPrice(inputDataDTO.getGoodsPrice());
 		newInputDataDTO.setGoodsquontity(inputDataDTO.getGoodsquontity());
 		// Added into List
-		newShopingCartInputDTOList.add(newInputDataDTO);
+		processedCart.add(newInputDataDTO);
 
-		return newShopingCartInputDTOList;
+		return processedCart;
 	}
 }

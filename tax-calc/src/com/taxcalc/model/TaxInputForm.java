@@ -1,14 +1,14 @@
-package com.taxcalc.service;
+package com.taxcalc.model;
 
 import java.math.BigDecimal;
 
 /**
  * following class is use as data transfer object
  * 
- * @author Vaquar Khan
+ * @author Uday
  * 
  */
-public class InputDataDTO implements InputDataDTOIfc {
+public class TaxInputForm implements IInputFormBean {
 
 	private boolean domesticTaxPercentage = false;
 	private boolean additionalImportedTaxPercentage = false;
@@ -19,8 +19,7 @@ public class InputDataDTO implements InputDataDTOIfc {
 	private BigDecimal calculateTaxPercentage = new BigDecimal(0);
 
 	/**
-	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isAdditionalImportedTaxPercentage() {
 		return additionalImportedTaxPercentage;

@@ -2,7 +2,7 @@ package com.taxcalc.service;
 
 /**
  * ShopingCartException use for throw error if any issue found in ShopingCart project
- * @author Vaquar Khan
+ * @author Uday
  *
  */
 public class ShopingCartException extends Exception {

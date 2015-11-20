@@ -3,137 +3,149 @@ package com.taxcalc.model;
 import java.math.BigDecimal;
 
 /**
- * following class is use as data transfer object
+ * DTO -- Mantains data related to each line item
  * 
  * @author Uday
  * 
  */
 public class TaxInputForm implements IInputFormBean {
 
-	private boolean domesticTaxPercentage = false;
-	private boolean additionalImportedTaxPercentage = false;
-	private boolean exemptTax = false;
-	private String goodsName = "";
-	private BigDecimal goodsPrice = new BigDecimal(0);
-	private int goodsquontity = 0;
-	private BigDecimal calculateTaxPercentage = new BigDecimal(0);
+    private boolean onlySalesTax = false;
+    
+    private boolean addnlImportTax = false;
+    
+    private boolean importTax = false;
+    
+    private boolean exemptTax = false;
+    
+    private String productName = "";
+    
+    private BigDecimal productPrice = new BigDecimal(0);
+    
+    private int quantity = 0;
+    
+    private BigDecimal calculatedTax = new BigDecimal(0);
 
-	/**
-	 * @return boolean
-	 */
-	public boolean isAdditionalImportedTaxPercentage() {
-		return additionalImportedTaxPercentage;
-	}
+    /**
+     * @return boolean
+     */
+    public boolean isAddnlImportTax() {
+	return addnlImportTax;
+    }
 
-	/**
-	 * 
-	 * @param additionalImportedTaxPercentage
-	 */
-	public void setAdditionalImportedTaxPercentage(
-			boolean additionalImportedTaxPercentage) {
-		this.additionalImportedTaxPercentage = additionalImportedTaxPercentage;
-	}
+    /**
+     * 
+     * @param additionalImportedTaxPercentage
+     */
+    public void setAddnlImportTax(boolean addnlImportTax) {
+	this.addnlImportTax = addnlImportTax;
+    }
 
-	/**
-	 * 
-	 * @return
-	 */
+    /**
+     * 
+     * @return
+     */
 
-	public boolean isDomesticTaxPercentage() {
-		return domesticTaxPercentage;
-	}
+    public boolean isOnlySalesTax() {
+	return onlySalesTax;
+    }
 
-	/**
-	 * 
-	 * @param domesticTaxPercentage
-	 */
-	public void setDomesticTaxPercentage(boolean domesticTaxPercentage) {
-		this.domesticTaxPercentage = domesticTaxPercentage;
-	}
+    /**
+     * 
+     * @param onlySalesTax
+     */
+    public void setOnlySalesTax(boolean onlySalesTax) {
+	this.onlySalesTax = onlySalesTax;
+    }
 
-	public boolean isExemptTax() {
-		return exemptTax;
-	}
+    public boolean isExemptTax() {
+	return exemptTax;
+    }
 
-	/**
-	 * 
-	 * @param exemptTax
-	 */
-	public void setExemptTax(boolean exemptTax) {
-		this.exemptTax = exemptTax;
-	}
+    /**
+     * 
+     * @param exemptTax
+     */
+    public void setExemptTax(boolean exemptTax) {
+	this.exemptTax = exemptTax;
+    }
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String getGoodsName() {
-		return goodsName;
-	}
+    /**
+     * 
+     * @return
+     */
+    public String getProductName() {
+	return productName;
+    }
 
-	/**
-	 * 
-	 * @param goodsName
-	 */
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
-	}
+    /**
+     * 
+     * @param goodsName
+     */
+    public void setProductName(String productName) {
+	this.productName = productName;
+    }
 
-	/**
-	 * 
-	 * @return
-	 */
-	public BigDecimal getGoodsPrice() {
-		return goodsPrice;
-	}
+    /**
+     * 
+     * @return
+     */
+    public BigDecimal getProductPrice() {
+	return productPrice;
+    }
 
-	/**
-	 * 
-	 * @param goodsPrice
-	 */
-	public void setGoodsPrice(BigDecimal goodsPrice) {
-		this.goodsPrice = goodsPrice;
-	}
+    /**
+     * 
+     * @param goodsPrice
+     */
+    public void setProductPrice(BigDecimal productPrice) {
+	this.productPrice = productPrice;
+    }
 
-	/**
-	 * 
-	 * @return
-	 */
-	public int getGoodsquontity() {
-		return goodsquontity;
-	}
+    /**
+     * 
+     * @return
+     */
+    public int getQuantity() {
+	return quantity;
+    }
 
-	/**
-	 * 
-	 * @param goodsquontity
-	 */
-	public void setGoodsquontity(int goodsquontity) {
-		this.goodsquontity = goodsquontity;
-	}
+    /**
+     * 
+     * @param goodsquontity
+     */
+    public void setQuantity(int quantity) {
+	this.quantity = quantity;
+    }
 
-	/**
-	 * 
-	 * @return
-	 */
-	public BigDecimal getCalculateTaxPercentage() {
-		return calculateTaxPercentage;
-	}
+    /**
+     * 
+     * @return
+     */
+    public BigDecimal getCalculatedTax() {
+	return calculatedTax;
+    }
 
-	/**
-	 * 
-	 * @param calculateTaxPercentage
-	 */
-	public void setCalculateTaxPercentage(BigDecimal calculateTaxPercentage) {
-		this.calculateTaxPercentage = calculateTaxPercentage;
-	}
+    /**
+     * 
+     * @param calculatedTax
+     */
+    public void setCalculatedTax(BigDecimal calculatedTax) {
+	this.calculatedTax = calculatedTax;
+    }
 
-	@Override
-	public String toString() {
-		System.out.println("Input Data ");
-		System.out
-				.println("----------------------------------------------------------------------------------------------------------- ");
-		return "\n\n " + "Goods Name=" + getGoodsName() + "\n "
-				+ "Goods Quontity=" + getGoodsquontity() + "\n "
-				+ "Good sPrice=" + getGoodsPrice();
-	}
+    public boolean isImportTax() {
+	return importTax;
+    }
+
+    public void setImportTax(boolean importTax) {
+	this.importTax = importTax;
+    }
+
+    @Override
+    public String toString() {
+	return "TaxInputForm [onlySalesTax=" + onlySalesTax + ", addnlImportTax=" + addnlImportTax + ", importTax=" + importTax + ", exemptTax=" + exemptTax + ", productName=" + productName
+		+ ", productPrice=" + productPrice + ", quantity=" + quantity + ", calculatedTax=" + calculatedTax + "]";
+    }
+
 }

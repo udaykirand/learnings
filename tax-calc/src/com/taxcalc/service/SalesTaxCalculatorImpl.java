@@ -7,110 +7,82 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
+import com.sun.java_cup.internal.runtime.Symbol;
 import com.taxcalc.model.IInputFormBean;
 import com.taxcalc.model.TaxInputForm;
+import com.taxcalc.util.Constants;
+import com.taxcalc.util.Util;
 
 /**
  * @author Uday
  * 
  */
 public class SalesTaxCalculatorImpl extends SalesTaxCalculatorBaseImpl {
-	/**
-	 * @author Uday Following method is used to calculate tax 1) Basic sales tax
-	 *         is applicable at a rate of 10% on all goods, 2) Except books,
-	 *         food, and medical products that are exempt. 3) Import duty is an
-	 *         additional sales tax applicable on all imported goods at a rate
-	 *         of 5%, with no exemptions.
-	 * 
-	 *         When I purchase items I receive a receipt which lists the name of
-	 *         all the items and their price (including tax),
-	 * 
-	 *         finishing with the total cost of the items, and the total amounts
-	 *         of sales taxes paid. The rounding rules for sales tax are that
-	 *         for a tax rate of n%, a shelf price of p contains (np/100 rounded
-	 *         up to the nearest 0.05) amount of sales tax.
-	 * 
-	 * @param cart
-	 * @return
-	 * @throws ShopingCartException
-	 */
-	public List<IInputFormBean> calculateTaxPercentage(
-			List<IInputFormBean> cart) throws ShopingCartException {
 
-		BigDecimal salesTax = null;
-		BigDecimal hundread = new BigDecimal(Constants.HUNDREAD);
-		BigDecimal taxPercentage = null;
+    /**
+     * @param cart
+     * @param taxRules
+     * @return
+     * @throws ShopingCartException
+     */
+    public List<IInputFormBean> updateCartWithTax(List<IInputFormBean> cart, Properties taxRules) throws ShopingCartException {
 
-		List<IInputFormBean> newShopingCartInputDTOList = new ArrayList<IInputFormBean>();
+	BigDecimal salesTax = null;
+	BigDecimal hundread = new BigDecimal(100);
+	BigDecimal taxPercentage = null;
 
-		if (cart != null) {
-			// Create Iterator
-			Iterator<IInputFormBean> cartIterator = cart
-					.iterator();
+	List<IInputFormBean> processedCart = new ArrayList<IInputFormBean>();
 
-			while (cartIterator.hasNext()) {
-				IInputFormBean inputDataDTO = (IInputFormBean) cartIterator
-						.next();
+	if (!cart.isEmpty()) {
+	    Iterator<IInputFormBean> cartIterator = cart.iterator();
 
-				if (inputDataDTO.isExemptTax()) {
-					taxPercentage = new BigDecimal(
-							Util.readProperties(Constants.EXEMPT));
-				} else if (inputDataDTO.isDomesticTaxPercentage()
-						&& inputDataDTO.isAdditionalImportedTaxPercentage()) {
-					taxPercentage = new BigDecimal(
-							Util.readProperties(Constants.BASIC_SALES_TAX_AND_IMPORT_DUTY));
-				} else if (inputDataDTO.isDomesticTaxPercentage()) {
-					taxPercentage = new BigDecimal(
-							Util.readProperties(Constants.BASIC_SALES_TAX));
-				} else if (inputDataDTO.isAdditionalImportedTaxPercentage()) {
-					taxPercentage = new BigDecimal(
-							Util.readProperties(Constants.IMPORT_DUTY));
-				}
-
-				// Calculate Tax
-				salesTax = inputDataDTO.getGoodsPrice().multiply(taxPercentage)
-						.divide(hundread);
-				// created new dto list
-				newShopingCartInputDTOList = Util.convertDto(inputDataDTO,
-						salesTax, newShopingCartInputDTOList);
-				// put values into Map
-			}// While
-
+	    while (cartIterator.hasNext()) {
+		IInputFormBean lineItemDTO = (IInputFormBean) cartIterator.next();
+		// System.out.println(inputDataDTO);
+		if (lineItemDTO.isExemptTax()) {
+		    taxPercentage = new BigDecimal(0);
+		} else if (lineItemDTO.isOnlySalesTax() && lineItemDTO.isImportTax()) {
+		    taxPercentage = new BigDecimal(taxRules.getProperty(Constants.TAX_AND_EXCISE_DUTY));
+		} else if (lineItemDTO.isOnlySalesTax()) {
+		    taxPercentage = new BigDecimal(taxRules.getProperty(Constants.ONLY_TAX));
+		} else if (lineItemDTO.isImportTax()) {
+		    taxPercentage = new BigDecimal(taxRules.getProperty(Constants.IMPORT_DUTY));
 		}
-		return newShopingCartInputDTOList;
+		// System.out.println("-----"+taxPercentage+"-----");
+		// Calculate Tax
+		salesTax = lineItemDTO.getProductPrice().multiply(taxPercentage).divide(hundread);
+		// System.out.println("-----"+salesTax+"-----");
+		// created new dto list
+		processedCart = Util.convertDto(lineItemDTO, salesTax, processedCart);
+		// put values into Map
+	    } // While
+
 	}
+	return processedCart;
+    }
 
-	/**
-	 * Following method is used to display Bill
-	 * 
-	 * @param cart
-	 */
-	public void displayBill(List<IInputFormBean> cart) {
+    /**
+     * Following method is used to display Bill
+     * 
+     * @param cart
+     */
+    public void displayBill(List<IInputFormBean> cart, int cartCount) {
+	System.out.println("Output# " + cartCount);
+	if (cart != null) {
+	    Iterator<?> cartIterator = cart.iterator();
+	    while (cartIterator.hasNext()) {
+		TaxInputForm inputDataDTO = (TaxInputForm) cartIterator.next();
 
-		if (cart != null) {
-			Iterator<?> shopingCartInputDTOListItr = cart
-					.iterator();
+		System.out.println(inputDataDTO.getQuantity() + " " + inputDataDTO.getProductName() + " " + addTaxandPrice(inputDataDTO.getCalculatedTax(), inputDataDTO.getProductPrice()));
 
-			while (shopingCartInputDTOListItr.hasNext()) {
-				TaxInputForm inputDataDTO = (TaxInputForm) shopingCartInputDTOListItr
-						.next();
+	    }
+	    System.out.println("Sales Tax : " + totalTax(cart));
+	    System.out.println("Total : " + totalPrice(cart));
 
-				System.out.println(inputDataDTO.getGoodsquontity()+" "
-						+ inputDataDTO.getGoodsName()+" "
-						+ addTaxandPrice(
-								inputDataDTO.getCalculateTaxPercentage(),
-								inputDataDTO.getGoodsPrice()));
-
-			}
-			System.out.println("Sales Tax : "
-					+ totalTax(cart));
-			System.out
-					.println("Total : " + totalPrice(cart));
-
-		}// end of if
-		System.out
-				.println("=============================================================================");
 	}
+	System.out.println("=============================================================================");
+    }
 
 }

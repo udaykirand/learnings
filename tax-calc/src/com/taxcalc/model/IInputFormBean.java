@@ -10,104 +10,118 @@ import java.math.BigDecimal;
  */
 public interface IInputFormBean {
 
-	/**
-	 * Following method will use for isAdditionalImportedTaxPercentage
-	 * 
-	 * @return
-	 */
-	public boolean isAdditionalImportedTaxPercentage();
+    /**
+     * Following method will use for isAddnlImportTax
+     * 
+     * @return
+     */
+    public boolean isAddnlImportTax();
 
-	/**
-	 * Following method will use for setAdditionalImportedTaxPercentage
-	 * 
-	 * @param additionalImportedTaxPercentage
-	 */
-	public void setAdditionalImportedTaxPercentage(
-			boolean additionalImportedTaxPercentage);
+    /**
+     * Following method will use for setAddnlImportTax
+     * 
+     * @param addnlImportTax
+     */
+    public void setAddnlImportTax(boolean addnlImportTax);
 
-	/**
-	 * Following method will use for isDomesticTaxPercentage
-	 * 
-	 * @return
-	 */
+    /**
+     * Following method will use for isOnlySalesTax
+     * 
+     * @return isOnlySalesTax
+     */
 
-	public boolean isDomesticTaxPercentage();
+    public boolean isOnlySalesTax();
 
-	/**
-	 * Following method will use for setDomesticTaxPercentage
-	 * 
-	 * @param domesticTaxPercentage
-	 */
-	public void setDomesticTaxPercentage(boolean domesticTaxPercentage);
+    /**
+     * Following method will use for isOnlySalesTax
+     * 
+     * @param isOnlySalesTax
+     */
+    public void setOnlySalesTax(boolean isOnlySalesTax);
 
-	/**
-	 * Following method will use for isExemptTax
-	 * 
-	 * @return
-	 */
-	public boolean isExemptTax();
+    /**
+     * Following method will use for isExemptTax
+     * 
+     * @return
+     */
+    public boolean isExemptTax();
 
-	/**
-	 * Following method will use for setExemptTax
-	 * 
-	 * @param exemptTax
-	 */
-	public void setExemptTax(boolean exemptTax);
+    /**
+     * Following method will use for setExemptTax
+     * 
+     * @param exemptTax
+     */
+    public void setExemptTax(boolean exemptTax);
 
-	/**
-	 * Following method will use for getGoodsName
-	 * 
-	 * @return
-	 */
-	public String getGoodsName();
+    /**
+     * Following method will use for getProductName
+     * 
+     * @return ProductName
+     */
+    public String getProductName();
 
-	/**
-	 * Following method will use for setGoodsName
-	 * 
-	 * @param goodsName
-	 */
-	public void setGoodsName(String goodsName);
+    /**
+     * Following method will use for setProductName
+     * 
+     * @param productName
+     */
+    public void setProductName(String productName);
 
-	/**
-	 * Following method will use for getGoodsPrice
-	 * 
-	 * @return
-	 */
-	public BigDecimal getGoodsPrice();
+    /**
+     * Following method will use for getProductPrice
+     * 
+     * @return productPrice
+     */
+    public BigDecimal getProductPrice();
 
-	/**
-	 * Following method will use for setGoodsPrice
-	 * 
-	 * @param goodsPrice
-	 */
-	public void setGoodsPrice(BigDecimal goodsPrice);
+    /**
+     * Following method will use for setProductPrice
+     * 
+     * @param productPrice
+     */
+    public void setProductPrice(BigDecimal productPrice);
 
-	/**
-	 * Following method will use for getGoodsquontity
-	 * 
-	 * @return
-	 */
-	public int getGoodsquontity();
+    /**
+     * Following method will use for getQuantity
+     * 
+     * @return
+     */
+    public int getQuantity();
 
-	/**
-	 * Following method will use for setGoodsquontity
-	 * 
-	 * @param goodsquontity
-	 */
-	public void setGoodsquontity(int goodsquontity);
+    /**
+     * Following method will use for setQuantity
+     * 
+     * @param quantity
+     */
+    public void setQuantity(int quantity);
 
-	/**
-	 * Following method will use for getCalculateTaxPercentage
-	 * 
-	 * @return
-	 */
-	public BigDecimal getCalculateTaxPercentage();
+    /**
+     * Following method will use for getCalculatedTax
+     * 
+     * @return
+     */
+    public BigDecimal getCalculatedTax();
 
-	/**
-	 * Following method will use for setCalculateTaxPercentage
-	 * 
-	 * @param calculateTaxPercentage
-	 */
-	public void setCalculateTaxPercentage(BigDecimal calculateTaxPercentage);
+    /**
+     * Following method will use for setCalculatedTax
+     * 
+     * @param calculatedTax
+     */
+    public void setCalculatedTax(BigDecimal calculatedTax);
+    
+    /**
+     * Following method will use for importTax
+     * 
+     * @return
+     */
+    public boolean isImportTax();
+
+    /**
+     * Following method will use for importTax
+     * 
+     * @param importTax
+     */
+    public void setImportTax(boolean importTax);
+
 
 }

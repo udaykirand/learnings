@@ -4,8 +4,11 @@
 package com.taxcalc.service;
 
 import java.util.List;
+import java.util.Properties;
 
 import com.taxcalc.model.IInputFormBean;
+import com.taxcalc.service.impl.ISalesTaxCalculator;
+import com.taxcalc.service.impl.ITaxCalculator;
 
 /**
  * @author Uday
@@ -13,26 +16,19 @@ import com.taxcalc.model.IInputFormBean;
  */
 public class TaxCalculatorImpl implements ITaxCalculator {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.taxcalc.service.ITaxCalculator#calculateTax(java.util.List)
-	 */
-	/**
-	 * This is only point of contact of outside world Calculate Shopping Cart
-	 * Bill Users calculate records Bill (Once bill gets generate user can’t
-	 * add, edit, remove or calculate records.
-	 * 
-	 * @throws ShopingCartException
-	 */
-	public void calculateTax(List<IInputFormBean> cart) {
-		ISalesTaxCalculator calculator =  CartFactory.getInstance();
-		try {
-			calculator.calculateTax(cart);
-		} catch (ShopingCartException e) {
-			e.printStackTrace();
-		}
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.taxcalc.service.ITaxCalculator#calculateTax(java.util.List)
+     */
+    public void prepareBillForCart(List<IInputFormBean> cart, Properties taxRules, int cartCount) {
+	ISalesTaxCalculator calculator = CalculatorFactory.getInstance();
+	try {
+	    calculator.calculateTaxAndPrint(cart, taxRules, cartCount);
+	} catch (ShopingCartException e) {
+	    e.printStackTrace();
 	}
+
+    }
 
 }
